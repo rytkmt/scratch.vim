@@ -59,6 +59,10 @@ endfunction
 function! s:close_window(force)
   " close scratch window if it is the last window open, or if force
   if strlen(g:scratch_persistence_file) > 0
+    let s:persistence_dir = expand(join(split(g:scratch_persistence_file, '/')[0:-2], '/'))
+    if !isdirectory(s:persistence_dir)
+      call mkdir(s:persistence_dir, "p")
+    endif
     let cmd = ':w ' . g:scratch_persistence_file
     execute cmd
   endif
